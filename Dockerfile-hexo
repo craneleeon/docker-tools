@@ -1,0 +1,6 @@
+FROM node:10.16.0-alpine
+RUN apk add --no-cache bash \
+    curl \
+    git
+RUN npm install -i hexo-cli -g
+WORKDIR /blog

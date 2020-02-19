@@ -1,0 +1,18 @@
+# registry.cn-hangzhou.aliyuncs.com/public-jsure/frontend-stage-0
+FROM node:11.14.0-alpine AS build-stage
+RUN apk add --no-cache \
+  python \
+  make \
+  g++ \
+  gcc \
+  git
+RUN git clone https://github.com/sass/sassc \
+  && cd sassc \
+  && git clone https://github.com/sass/libsass \
+  && SASS_LIBSASS_PATH=/sassc/libsass make
+RUN mv sassc/bin/sassc /usr/bin/sass
+RUN rm -rf /var/cache/apk/* && rm -rf /sassc
+RUN npm config set registry https://registry.npm.taobao.org \
+    && yarn config set registry https://registry.npm.taobao.org
+
+
